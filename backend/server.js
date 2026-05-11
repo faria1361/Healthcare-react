@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import { testDatabaseConnection } from "./db.js";
 import authRoutes from "./routes/auth.routes.js";
 import healthcareRoutes from "./routes/healthcare.routes.js";
+import bloodbankRoutes from "./routes/bloodbank.routes.js";
+
+
 
 dotenv.config();
 
@@ -21,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/healthcare", healthcareRoutes);
+app.use("/api/bloodbank", bloodbankRoutes);
 
 app.get("/", (req, res) => {
   res.json({
