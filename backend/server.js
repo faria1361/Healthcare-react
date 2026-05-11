@@ -6,12 +6,19 @@ import authRoutes from "./routes/auth.routes.js";
 import healthcareRoutes from "./routes/healthcare.routes.js";
 import bloodbankRoutes from "./routes/bloodbank.routes.js";
 import pharmacyRoutes from "./routes/pharmacy.routes.js";
+import path from "path";
+import { fileURLToPath } from "url";
+import pharmacyRoutes from "./routes/pharmacy.routes.js";
 
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 app.use(
   cors({
@@ -25,6 +32,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/healthcare", healthcareRoutes);
 app.use("/api/bloodbank", bloodbankRoutes);
+app.use("/api/pharmacy", pharmacyRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/pharmacy", pharmacyRoutes);
 
 app.get("/", (req, res) => {

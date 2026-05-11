@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import api from "../services/api.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import PharmacyAdminDashboard from "./PharmacyAdminDashboard.jsx";
 
 const initialFilters = {
   search: "",
@@ -362,6 +363,7 @@ export default function Pharmacies() {
         )}
 
         <div className="pharm-tabs">
+
           <button className={view === "shop" ? "active" : ""} onClick={() => setView("shop")}>
             <Pill size={16} />
             Pharmacy
@@ -382,6 +384,9 @@ export default function Pharmacies() {
             <ReceiptText size={16} />
             My Orders
           </button>
+          <button className={view === "admin" ? "active" : ""} onClick={() => setView("admin")}>
+  Pharmacy Admin
+</button>
         </div>
 
         {view === "shop" && (
@@ -677,6 +682,8 @@ export default function Pharmacies() {
             ))}
           </div>
         )}
+
+        {view === "admin" && <PharmacyAdminDashboard />}
 
         {totals.count > 0 && view !== "checkout" && (
           <button className="floating-cart" onClick={() => setView("checkout")}>
