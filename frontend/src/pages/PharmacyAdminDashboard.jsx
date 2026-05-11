@@ -46,6 +46,14 @@ function imageUrl(path) {
 }
 
 export default function PharmacyAdminDashboard() {
+  const [adminToken, setAdminToken] = useState(() =>
+  localStorage.getItem("pharmacy_admin_token") || ""
+);
+
+const [loginForm, setLoginForm] = useState({
+  username: "",
+  password: "",
+});
   const [summary, setSummary] = useState(null);
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -87,9 +95,9 @@ export default function PharmacyAdminDashboard() {
 
     try {
       const [summaryResponse, productsResponse, ordersResponse] = await Promise.all([
-        api.get("/pharmacy/admin/summary"),
-        api.get("/pharmacy/admin/products"),
-        api.get("/pharmacy/admin/orders"),
+        api.get("/pharmacy/admin/summary", adminConfig()),
+        api.get("/pharmacy/admin/products", adminConfig()),
+        api.get("/pharmacy/admin/orders", adminConfig()),
       ]);
 
       setSummary(summaryResponse.data.data);
@@ -114,8 +122,9 @@ export default function PharmacyAdminDashboard() {
   async function loadProducts() {
     try {
       const response = await api.get("/pharmacy/admin/products", {
-        params: { search },
-      });
+  ...adminConfig(),
+  params: { search },
+});
 
       setProducts(response.data.data || []);
     } catch (error) {
@@ -129,8 +138,9 @@ export default function PharmacyAdminDashboard() {
   async function loadOrders() {
     try {
       const response = await api.get("/pharmacy/admin/orders", {
-        params: { status: orderStatus },
-      });
+  ...adminConfig(),
+  params: { status: orderStatus },
+});
 
       setOrders(response.data.data || []);
     } catch (error) {
@@ -140,6 +150,58 @@ export default function PharmacyAdminDashboard() {
       });
     }
   }
+
+  function adminConfig(extraHeaders = {}) {
+  return {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("pharmacy_admin_token") || adminToken}`,
+      ...extraHeaders,
+    },
+  };
+}
+
+function updateLoginForm(event) {
+  const { name, value } = event.target;
+
+  setLoginForm((current) => ({
+    ...current,
+    [name]: value,
+  }));
+}
+
+async function submitAdminLogin(event) {
+  event.preventDefault();
+
+  setLoading(true);
+  setNotice(null);
+
+  try {
+    const response = await api.post("/pharmacy/admin/login", loginForm);
+
+    localStorage.setItem("pharmacy_admin_token", response.data.token);
+    setAdminToken(response.data.token);
+
+    setNotice({
+      type: "success",
+      message: response.data.message || "Admin login successful.",
+    });
+  } catch (error) {
+    setNotice({
+      type: "error",
+      message: error.response?.data?.message || "Invalid admin login.",
+    });
+  } finally {
+    setLoading(false);
+  }
+}
+
+function logoutAdmin() {
+  localStorage.removeItem("pharmacy_admin_token");
+  setAdminToken("");
+  setSummary(null);
+  setProducts([]);
+  setOrders([]);
+}
 
   function updateProductField(event) {
     const { name, value, type, checked, files } = event.target;
@@ -200,12 +262,12 @@ export default function PharmacyAdminDashboard() {
 
     try {
       const response = editingProduct
-        ? await api.patch(`/pharmacy/admin/products/${editingProduct.id}`, formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-          })
-        : await api.post("/pharmacy/admin/products", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-          });
+        ? await api.patch(`/pharmacy/admin/products/${editingProduct.id}`, formData, adminConfig({
+  "Content-Type": "multipart/form-data",
+}))
+        : await api.post("/pharmacy/admin/products", formData, adminConfig({
+  "Content-Type": "multipart/form-data",
+}));
 
       setNotice({
         type: "success",
@@ -231,7 +293,7 @@ export default function PharmacyAdminDashboard() {
     setLoading(true);
 
     try {
-      const response = await api.delete(`/pharmacy/admin/products/${productId}`);
+      const response = await api.delete(`/pharmacy/admin/products/${productId}`, adminConfig());
 
       setNotice({
         type: "success",
@@ -309,6 +371,153 @@ export default function PharmacyAdminDashboard() {
       setLoading(false);
     }
   }
+
+  if (!adminToken) {
+  return (
+    <section className="pharm-admin-login">
+      <style>{`
+        .pharm-admin-login {
+          min-height: 70vh;
+          display: grid;
+          place-items: center;
+          padding: 30px 16px;
+          background: #f8fafc;
+        }
+
+        .admin-login-card {
+          width: min(460px, 100%);
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-radius: 26px;
+          padding: 28px;
+          box-shadow: 0 24px 60px rgba(15, 23, 42, .12);
+        }
+
+        .admin-login-icon {
+          width: 62px;
+          height: 62px;
+          display: grid;
+          place-items: center;
+          border-radius: 20px;
+          background: linear-gradient(135deg, #2563eb, #10b981);
+          color: white;
+          margin-bottom: 18px;
+        }
+
+        .admin-login-card h1 {
+          margin: 0;
+          font-size: 2rem;
+          letter-spacing: -.04em;
+        }
+
+        .admin-login-card p {
+          margin: 8px 0 20px;
+          color: #64748b;
+        }
+
+        .admin-login-card form {
+          display: grid;
+          gap: 14px;
+        }
+
+        .admin-login-card label {
+          display: grid;
+          gap: 7px;
+          color: #334155;
+          font-weight: 900;
+          font-size: .9rem;
+        }
+
+        .admin-login-card input {
+          width: 100%;
+          border: 1px solid #dbe3ef;
+          border-radius: 14px;
+          padding: 13px;
+          font: inherit;
+          font-weight: 700;
+          outline: none;
+        }
+
+        .admin-login-card input:focus {
+          border-color: #2563eb;
+          box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+        }
+
+        .admin-login-btn {
+          border: none;
+          border-radius: 14px;
+          padding: 13px 16px;
+          color: white;
+          background: #2563eb;
+          font-weight: 950;
+          cursor: pointer;
+          box-shadow: 0 12px 24px rgba(37,99,235,.22);
+        }
+
+        .admin-login-alert {
+          border-radius: 14px;
+          padding: 12px 14px;
+          margin-bottom: 14px;
+          font-weight: 900;
+        }
+
+        .admin-login-alert.error {
+          background: #fee2e2;
+          color: #991b1b;
+        }
+
+        .admin-login-alert.success {
+          background: #dcfce7;
+          color: #166534;
+        }
+      `}</style>
+
+      <div className="admin-login-card">
+        <div className="admin-login-icon">
+          <Settings size={28} />
+        </div>
+
+        <h1>Pharmacy Admin Login</h1>
+        <p>Enter pharmacy admin username and password to manage products, orders, delivery, and prices.</p>
+
+        {notice && (
+          <div className={`admin-login-alert ${notice.type}`}>
+            {notice.message}
+          </div>
+        )}
+
+        <form onSubmit={submitAdminLogin}>
+          <label>
+            Admin Username
+            <input
+              name="username"
+              value={loginForm.username}
+              onChange={updateLoginForm}
+              placeholder="pharmacyadmin"
+              required
+            />
+          </label>
+
+          <label>
+            Admin Password
+            <input
+              type="password"
+              name="password"
+              value={loginForm.password}
+              onChange={updateLoginForm}
+              placeholder="Enter admin password"
+              required
+            />
+          </label>
+
+          <button className="admin-login-btn" disabled={loading}>
+            {loading ? "Signing in..." : "Access Admin Dashboard"}
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+}
 
   return (
     <section className="pharm-admin">
@@ -552,6 +761,8 @@ export default function PharmacyAdminDashboard() {
           </div>
         </div>
       )}
+
+      
 
       {activePanel === "settings" && (
         <form className="admin-card settings-card" onSubmit={saveDeliverySettings}>

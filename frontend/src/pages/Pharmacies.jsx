@@ -37,6 +37,8 @@ const initialCheckout = {
   special_instructions: "",
 };
 
+const isPharmacyAdmin = Boolean(localStorage.getItem("pharmacy_admin_token"));
+
 function money(value) {
   return Number(value || 0).toFixed(2);
 }
@@ -384,9 +386,12 @@ export default function Pharmacies() {
             <ReceiptText size={16} />
             My Orders
           </button>
-          <button className={view === "admin" ? "active" : ""} onClick={() => setView("admin")}>
-  Pharmacy Admin
-</button>
+          {isPharmacyAdmin && (
+            <button className={view === "admin" ? "active" : ""} onClick={() => setView("admin")}>
+              Pharmacy Admin
+            </button>
+          )}
+
         </div>
 
         {view === "shop" && (

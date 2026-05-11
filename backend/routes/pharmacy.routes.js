@@ -72,6 +72,40 @@ const locations = {
 };
 
 function requirePharmacyAdmin(req, res, next) {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader?.startsWith("Bearer ")) {
+    return res.status(401).json({
+      success: false,
+      message: "Pharmacy admin login required.",
+    });
+  }
+
+  try {
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(
+      token,
+      process.env.PHARMACY_ADMIN_JWT_SECRET || process.env.JWT_SECRET
+    );
+
+    if (decoded.role !== "pharmacy_admin") {
+      return res.status(403).json({
+        success: false,
+        message: "Only pharmacy admin can access this dashboard.",
+      });
+    }
+
+    req.pharmacyAdmin = decoded;
+    next();
+  } catch {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid or expired pharmacy admin login.",
+    });
+  }
+}
+
+function requirePharmacyAdmin(req, res, next) {
   optionalAuth(req, res, () => {
     if (!req.user) {
       return res.status(401).json({
@@ -315,6 +349,48 @@ async function getOrderDetails(orderId) {
     })),
   };
 }
+
+router.post("/admin/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  const adminUsername = process.env.PHARMACY_ADMIN_USERNAME;
+  const adminPassword = process.env.PHARMACY_ADMIN_PASSWORD;
+
+  if (!adminUsername || !adminPassword) {
+    return res.status(500).json({
+      success: false,
+      message: "Pharmacy admin credentials are not configured.",
+    });
+  }
+
+  if (username !== adminUsername || password !== adminPassword) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid pharmacy admin username or password.",
+    });
+  }
+
+  const token = jwt.sign(
+    {
+      role: "pharmacy_admin",
+      username: adminUsername,
+    },
+    process.env.PHARMACY_ADMIN_JWT_SECRET || process.env.JWT_SECRET,
+    {
+      expiresIn: "8h",
+    }
+  );
+
+  res.json({
+    success: true,
+    message: "Pharmacy admin login successful.",
+    token,
+    admin: {
+      username: adminUsername,
+      role: "pharmacy_admin",
+    },
+  });
+});
 
 router.get("/admin/summary", requirePharmacyAdmin, async (_req, res) => {
   const [[productStats], [orderStats], [recentOrders], [settingsRows]] = await Promise.all([
