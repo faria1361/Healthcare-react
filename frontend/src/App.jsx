@@ -1,0 +1,32 @@
+import { Navigate, Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout.jsx";
+import Hospitals from "./pages/Hospitals.jsx";
+import DiagnosticCenters from "./pages/DiagnosticCenters.jsx";
+import BloodBanks from "./pages/BloodBanks.jsx";
+import Pharmacies from "./pages/Pharmacies.jsx";
+import Ambulance from "./pages/Ambulance.jsx";
+import Telemedicine from "./pages/Telemedicine.jsx";
+import DrugInteractions from "./pages/DrugInteractions.jsx";
+import Appointments from "./pages/Appointments.jsx";
+import SignIn from "./pages/SignIn.jsx";
+import SignUp from "./pages/SignUp.jsx";
+
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Navigate to="/hospitals" replace />} />
+        <Route path="/hospitals" element={<Hospitals />} />
+        <Route path="/diagnostic-centers" element={<DiagnosticCenters />} />
+        <Route path="/blood-banks" element={<BloodBanks />} />
+        <Route path="/pharmacies" element={<Pharmacies />} />
+        <Route path="/ambulance" element={<Ambulance />} />
+        <Route path="/telemedicine" element={<Telemedicine />} />
+        <Route path="/drug-interactions" element={<DrugInteractions />} />
+        <Route path="/appointments" element={<Appointments />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Route>
+    </Routes>
+  );
+}

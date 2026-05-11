@@ -1,0 +1,851 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Header */
+.site-header {
+  background: #3b82f6;
+  color: #ffffff;
+  padding: 1rem 0;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.app-subtitle {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  color: #dbeafe;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #dbeafe;
+}
+
+.search-input {
+  width: 320px;
+  padding: 10px 12px 10px 38px;
+  border-radius: 8px;
+  border: 1px solid #60a5fa;
+  background: rgba(59, 130, 246, 0.35);
+  color: #ffffff;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #dbeafe;
+}
+
+.user-button {
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  padding: 0.62rem 0.9rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.user-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Navigation */
+.nav {
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-container::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  white-space: nowrap;
+  text-decoration: none;
+  color: #475569;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-item:hover {
+  color: #2563eb;
+}
+
+.nav-item.active {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+}
+
+/* Main */
+.main-content {
+  flex: 1;
+}
+
+.page {
+  padding: 24px 16px;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.page h2 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.page p {
+  color: #64748b;
+}
+
+/* Map placeholder */
+.map-page {
+  min-height: calc(100vh - 150px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-placeholder {
+  width: min(620px, 100%);
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.primary-button {
+  margin-top: 18px;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-wrap: wrap;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .search-container {
+    flex: 1;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .app-title {
+    font-size: 1.45rem;
+  }
+}
+
+.auth-area {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logout-button {
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 0.62rem 0.9rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.logout-button:hover {
+  background: #dc2626;
+}
+
+.auth-page {
+  min-height: calc(100vh - 150px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.auth-card {
+  width: min(440px, 100%);
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.1);
+}
+
+.auth-card h2 {
+  margin-bottom: 6px;
+  font-size: 1.7rem;
+}
+
+.auth-card p {
+  color: #64748b;
+  margin-bottom: 18px;
+}
+
+.auth-card label {
+  display: block;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 14px;
+}
+
+.auth-card input {
+  width: 100%;
+  margin-top: 6px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.auth-card input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.full-button {
+  width: 100%;
+  justify-content: center;
+}
+
+.form-error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 16px;
+  margin-bottom: 0 !important;
+}
+
+.auth-switch a {
+  color: #2563eb;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.map-layout {
+  display: grid;
+  grid-template-columns: 390px 1fr;
+  gap: 0;
+  min-height: calc(100vh - 132px);
+  background: #f8fafc;
+}
+
+.facility-panel {
+  background: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 132px);
+  max-height: calc(100vh - 132px);
+}
+
+.facility-panel-header {
+  padding: 18px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.facility-panel-header h2 {
+  font-size: 1.45rem;
+  margin-bottom: 6px;
+}
+
+.facility-panel-header p {
+  color: #64748b;
+  font-size: 0.92rem;
+  margin-bottom: 12px;
+}
+
+.location-note {
+  display: block;
+  margin-top: 10px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.facility-list {
+  padding: 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.facility-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #2563eb;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.05);
+}
+
+.facility-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.facility-card h3 {
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.facility-card p {
+  font-size: 0.88rem;
+  color: #475569;
+  margin-bottom: 5px;
+}
+
+.facility-card strong {
+  color: #1e293b;
+}
+
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 4px 7px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.service-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 8px 0;
+}
+
+.service-pills span {
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.small-action-button {
+  margin-top: 8px;
+  border: none;
+  border-radius: 9px;
+  padding: 8px 11px;
+  background: #2563eb;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.small-action-button:hover {
+  background: #1d4ed8;
+}
+
+.map-box {
+  min-height: calc(100vh - 132px);
+}
+
+.leaflet-map {
+  width: 100%;
+  height: calc(100vh - 132px);
+}
+
+.map-popup {
+  max-width: 230px;
+}
+
+.map-popup h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.map-popup p {
+  margin: 4px 0;
+  font-size: 0.85rem;
+}
+
+.map-popup button {
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 10px;
+  background: #2563eb;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.empty-box {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  color: #64748b;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .facility-panel {
+    min-height: auto;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .facility-list {
+    max-height: 420px;
+  }
+
+  .map-box,
+  .leaflet-map {
+    height: 520px;
+    min-height: 520px;
+  }
+}
+
+.route-info-card {
+  margin-top: 12px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 12px;
+  color: #1e3a8a;
+}
+
+.route-info-card div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.route-info-card span {
+  font-weight: 800;
+  color: #1d4ed8;
+}
+
+.route-info-card p {
+  margin: 8px 0 10px;
+  color: #1e40af;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.route-info-card button {
+  border: none;
+  border-radius: 8px;
+  padding: 7px 10px;
+  background: #ffffff;
+  color: #1d4ed8;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.route-info-card button:hover {
+  background: #dbeafe;
+}
+
+
+.leaflet-routing-container h2,
+.leaflet-routing-container h3 {
+  font-size: 14px !important;
+  margin: 6px 0 !important;
+}
+
+.leaflet-routing-alt {
+  max-height: 240px !important;
+  overflow-y: auto !important;
+}
+
+.leaflet-routing-geocoders {
+  display: none !important;
+}
+
+.start-box {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.google-route-card {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 12px;
+  color: #1e3a8a;
+}
+
+.route-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.route-title-row svg {
+  color: #2563eb;
+  margin-top: 2px;
+}
+
+.google-route-card strong {
+  display: block;
+  font-size: 0.85rem;
+  color: #1e3a8a;
+}
+
+.google-route-card span {
+  display: block;
+  font-size: 0.95rem;
+  color: #1d4ed8;
+  font-weight: 900;
+  margin-top: 2px;
+}
+
+.google-route-card p {
+  margin: 10px 0;
+  color: #1e40af;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.google-route-card button {
+  border: none;
+  border-radius: 9px;
+  padding: 8px 12px;
+  background: #ffffff;
+  color: #1d4ed8;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.google-route-card button:hover {
+  background: #dbeafe;
+}
+
+/* Hide routing text panel; route stays on map */
+.leaflet-routing-container {
+  display: none !important;
+}
+
+/* Make Leaflet popups cleaner */
+.leaflet-popup-content-wrapper {
+  border-radius: 14px;
+}
+
+.leaflet-popup-content {
+  margin: 12px 14px;
+}
+
+.find-nearby-modern-btn {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 16px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 55%, #60a5fa 100%);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
+  transition: all 0.25s ease;
+  margin-top: 8px;
+}
+
+.find-nearby-modern-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.35);
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #3b82f6 100%);
+}
+
+.find-nearby-modern-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
+}
+
+.find-nearby-modern-btn svg {
+  flex-shrink: 0;
+}
+
+.find-nearby-modern-btn span {
+  line-height: 1;
+}
+
+.facility-panel-header {
+  padding: 22px 18px;
+}
+
+.facility-panel-header h2 {
+  font-size: 1.9rem;
+  margin-bottom: 8px;
+}
+
+.facility-panel-header p {
+  color: #64748b;
+  font-size: 1rem;
+  margin-bottom: 14px;
+}
+
+.initial-map-layout {
+  grid-template-columns: 1fr !important;
+  position: relative;
+}
+
+.initial-map-layout .map-box,
+.initial-map-layout .leaflet-map {
+  height: calc(100vh - 132px);
+  min-height: calc(100vh - 132px);
+}
+
+.floating-find-nearby-btn {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  z-index: 1000;
+  border: none;
+  outline: none;
+  border-radius: 16px;
+  padding: 15px 22px;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 55%, #60a5fa 100%);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 14px 32px rgba(37, 99, 235, 0.36);
+  transition: all 0.25s ease;
+}
+
+.floating-find-nearby-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 38px rgba(37, 99, 235, 0.44);
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #3b82f6 100%);
+}
+
+.find-nearby-modern-btn {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 16px;
+  padding: 15px 18px;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 55%, #60a5fa 100%);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
+  transition: all 0.25s ease;
+}
+
+.find-nearby-modern-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.35);
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #3b82f6 100%);
+}
+
+/* Hide routing instruction box, keep only route line on map */
+.leaflet-routing-container {
+  display: none !important;
+}
+
+.google-route-card {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 12px;
+  color: #1e3a8a;
+}
+
+.route-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.route-title-row svg {
+  color: #2563eb;
+  margin-top: 2px;
+}
+
+.google-route-card strong {
+  display: block;
+  font-size: 0.85rem;
+  color: #1e3a8a;
+}
+
+.google-route-card span {
+  display: block;
+  font-size: 0.95rem;
+  color: #1d4ed8;
+  font-weight: 900;
+  margin-top: 2px;
+}
+
+.google-route-card p {
+  margin: 10px 0;
+  color: #1e40af;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.google-route-card button {
+  border: none;
+  border-radius: 9px;
+  padding: 8px 12px;
+  background: #ffffff;
+  color: #1d4ed8;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.google-route-card button:hover {
+  background: #dbeafe;
+}
+
+@media (max-width: 900px) {
+  .floating-find-nearby-btn {
+    top: 14px;
+    right: 14px;
+    left: 14px;
+    width: calc(100% - 28px);
+  }
+}
