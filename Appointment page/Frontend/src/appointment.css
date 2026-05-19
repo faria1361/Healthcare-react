@@ -1,0 +1,66 @@
+.appointment-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f7ff;
+}
+
+.appointment-card {
+  width: 900px;
+  display: flex;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.left {
+  flex: 1;
+  background: #1976d2;
+  color: white;
+  padding: 40px;
+}
+
+.left h1 {
+  font-size: 34px;
+}
+
+.left img {
+  width: 200px;
+  margin-top: 20px;
+}
+
+.right {
+  flex: 1;
+  padding: 40px;
+}
+
+form input,
+form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0f5bb5;
+}
+
+@media (max-width: 768px) {
+  .appointment-card {
+    flex-direction: column;
+  }
+}
